@@ -19,10 +19,8 @@ class Result(Resource):
         branch = request.args.get('branch')
         semester = request.args.get('semester')
         scheme = request.args.get('scheme')
-
-        print(branch,semester,scheme)
+        
         filters = [branch,semester,scheme,'B.TECH']
-
         all_data = scrape_all_data()
         filtered_data = filter_data(data=all_data,filters=filters)
         
@@ -37,7 +35,6 @@ class Result(Resource):
         # Extract specific ID from result URL
         specific_id = extract_id_from_url(url=result_url)
 
-        # Check if at least one of 'name' or 'rollNo' is provided
         if not roll_no:
             return jsonify({"error": "Please provide Roll Number."}), 400
         
