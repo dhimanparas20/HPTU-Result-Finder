@@ -72,21 +72,12 @@ def fetch_result_by_rollNo(rollNo,id):
     # Send the POST request
     response = requests.post(url, data=data)
     op = response.text
-
     return op
-
-    # # Save the response content to a file named op.html
-    # with open("op.html", "w", encoding="utf-8") as file:
-    #     file.write(op)
-
-    # print("Response saved to op.html")
 
 def fetch_result_by_name(name,id):
     url = "https://results.indiaresults.com/hp/himtu/result3/name-results.aspx"
 
     data = {
-        "__VIEWSTATE": "/wEPDwUKMTA4OTgzNDMwNGRk9Qx7Q7AxJ8UcVEmRv9BFDo+NeYd29fczQSOs2Gcyxms=",
-        "__VIEWSTATEGENERATOR": "7E0BBA3D",
         "RollNo": "",
         "txtName": name,
         "id": id
@@ -95,13 +86,4 @@ def fetch_result_by_name(name,id):
     # Send the POST request
     response = requests.post(url, data=data)
     op = response.text
-    return op
-
-    # # Save the response content to a file named op.html
-    # with open("op.html", "w", encoding="utf-8") as file:
-    #     file.write(op)
-
-    # print("Response saved to op.html")    
-
-
-    
+    return op    

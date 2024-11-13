@@ -3,7 +3,6 @@ from flask_restful import Api, Resource
 from os import system
 from module.scraper import filter_data,scrape_all_data,extract_id_from_url,fetch_result_by_rollNo
 
-
 app = Flask(__name__)
 api = Api(app)
 
@@ -44,8 +43,7 @@ class FetchResult(Resource):
 
         # Return the HTML content directly to the frontend
         return Response(html_content, mimetype='text/html')
-
-   
+  
 # Add the Home resource to the API
 api.add_resource(Home, '/')
 api.add_resource(FetchResult, '/fetch_result')
