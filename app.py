@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, make_response, jsonify
 from flask_restful import Api, Resource
 from os import system
 from module.scraper import filter_data,scrape_all_data
-system("clear")
+
 
 app = Flask(__name__)
 api = Api(app)
