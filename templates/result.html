@@ -49,7 +49,7 @@
             <div class="container">
             <img src="static/s_logo.png" alt="HPTU Logo">
             </div>
-            </center>
+        </center>
         <div class="container">
             <a href="/" class="btn btn-outline-light">Home</a>
         </div>
@@ -77,14 +77,39 @@
                                 <td>{{ result.date }}</td>
                                 <td>{{ result.result_of }}</td>
                                 <td>
-    <a href="{{ result.url }}" target="_blank" class="btn btn-sm btn-outline-light">View Result</a>
-</td>
+                                    <button class="btn btn-sm btn-outline-light ml-2" type="button" data-bs-toggle="collapse" data-bs-target="#resultForm{{ loop.index }}" aria-expanded="false" aria-controls="resultForm{{ loop.index }}">Result by Roll No</button>
+
+                                    <a href="{{ result.url }}" target="_blank" class="btn btn-sm btn-outline-light">Result By Name</a>
+                                    
+                                </td>
                             </tr>
                         {% endif %}
                     {% endfor %}
                 </tbody>
             </table>
         </div>
+
+        <!-- Dropdown form to input name and roll number -->
+        {% for result in data %}
+            <div class="collapse" id="resultForm{{ loop.index }}">
+                <div class="card card-body bg-dark text-light mt-4">
+                    <h4 class="text-center">Fetch Results</h4>
+                    <form id="resultForm{{ loop.index }}" action="/fetch_result" method="post" target="blank">
+                        <div class="mb-3">
+                            <label for="rollNo" class="form-label">Roll Number</label>
+                            <input type="text" class="form-control" id="rollNo" name="rollNo" placeholder="Enter Roll Number" required>
+                        </div>
+                        <!-- Hidden input to send the result URL -->
+                        <input type="hidden" name="result_url" value="{{ result.url }}">
+
+                        <div class="d-flex justify-content-center">
+                            <button type="submit" class="btn btn-outline-light">Submit</button>
+                            <button type="reset" class="btn btn-outline-light">Reset</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        {% endfor %}
     </main>
 
     <footer class="bg-purple-900 text-center py-4 mt-8">
@@ -95,5 +120,14 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // JavaScript to enforce that at least one field is filled in before submission
+        document.querySelectorAll("form").forEach(function(form) {
+            form.addEventListener("submit", function(event) {
+                var name = form.querySelector("#name").value;
+                var rollNo = form.querySelector("#rollNo").value;
+            });
+        });
+    </script>
 </body>
 </html>

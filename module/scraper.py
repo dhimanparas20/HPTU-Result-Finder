@@ -1,4 +1,5 @@
 import requests
+from urllib.parse import urlparse, parse_qs
 from bs4 import BeautifulSoup
 from os import system
 
@@ -48,4 +49,59 @@ def filter_data(data,filters):
     for item in filtered_data:
         resturn_set.append(item)
     return resturn_set 
+
+def extract_id_from_url(url):
+    # Parse the URL and extract query parameters
+    parsed_url = urlparse(url)
+    query_params = parse_qs(parsed_url.query)
+    
+    # Extract the 'id' parameter value
+    id_value = query_params.get('id', [None])[0]
+    
+    return id_value   
+
+def fetch_result_by_rollNo(rollNo,id):
+    url = "https://results.indiaresults.com/hp/himtu/result3/result.aspx"
+    # Define the POST request body data
+    data = {
+        "RollNo": rollNo,
+        "txtName": "",
+        "id": id
+    }
+
+    # Send the POST request
+    response = requests.post(url, data=data)
+    op = response.text
+
+    return op
+
+    # # Save the response content to a file named op.html
+    # with open("op.html", "w", encoding="utf-8") as file:
+    #     file.write(op)
+
+    # print("Response saved to op.html")
+
+def fetch_result_by_name(name,id):
+    url = "https://results.indiaresults.com/hp/himtu/result3/name-results.aspx"
+
+    data = {
+        "__VIEWSTATE": "/wEPDwUKMTA4OTgzNDMwNGRk9Qx7Q7AxJ8UcVEmRv9BFDo+NeYd29fczQSOs2Gcyxms=",
+        "__VIEWSTATEGENERATOR": "7E0BBA3D",
+        "RollNo": "",
+        "txtName": name,
+        "id": id
+    }
+
+    # Send the POST request
+    response = requests.post(url, data=data)
+    op = response.text
+    return op
+
+    # # Save the response content to a file named op.html
+    # with open("op.html", "w", encoding="utf-8") as file:
+    #     file.write(op)
+
+    # print("Response saved to op.html")    
+
+
     
