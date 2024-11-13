@@ -6,16 +6,19 @@ from module.scraper import filter_data,scrape_all_data,extract_id_from_url,fetch
 app = Flask(__name__)
 api = Api(app)
 
+#Render the Home Screen
 class Home(Resource):
     def get(self):
         # Render home.html on GET request
         return make_response(render_template('home.html'))
 
-    def post(self):
+#Render the Results
+class Result(Resource):
+    def get(self):
         # Read the form data sent via POST
-        branch = request.form.get('branch')
-        semester = request.form.get('semester')
-        scheme = request.form.get('scheme')
+        branch = request.args.get('branch')
+        semester = request.args.get('semester')
+        scheme = request.args.get('scheme')
 
         print(branch,semester,scheme)
         filters = [branch,semester,scheme,'B.TECH']
@@ -26,7 +29,6 @@ class Home(Resource):
         # Return form data as JSON for demonstration
         return make_response(render_template('result.html',data=filtered_data))
 
-class FetchResult(Resource):
     def post(self):
         # Get data from the POST request
         roll_no = request.form.get('rollNo')
@@ -46,8 +48,7 @@ class FetchResult(Resource):
   
 # Add the Home resource to the API
 api.add_resource(Home, '/')
-api.add_resource(FetchResult, '/fetch_result')
+api.add_resource(Result, '/result')
 
 if __name__ == '__main__':
-    app.run(debug=False,threaded=True,port=5000)
-    
+    app.run(debug=False,threaded=True,port=5000) 
