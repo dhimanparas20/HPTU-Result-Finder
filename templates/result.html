@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HPTU Result Finder - Results</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #000000;
+            color: #e2e8f0;
+        }
+        .navbar {
+            background-color: #111111;
+        }
+        .table {
+            color: #e2e8f0;
+        }
+        .table-dark {
+            background-color: #111111;
+        }
+        .table-dark th,
+        .table-dark td {
+            border-color: #333333;
+        }
+        a {
+            color: #9f7aea;
+            text-decoration: none;
+        }
+        a:hover {
+            color: #805ad5;
+            text-decoration: underline;
+        }
+        .btn-outline-light {
+            color: #9f7aea;
+            border-color: #9f7aea;
+        }
+        .btn-outline-light:hover {
+            color: #000000;
+            background-color: #9f7aea;
+            border-color: #9f7aea;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">HPTU Result Finder</a>
+            <a href="/" class="btn btn-outline-light">Home</a>
+            <span class="navbar-text ms-auto">
+                Credits: Paras Dhiman, B.Tech CSE 7th Sem (2021-2025)
+            </span>
+        </div>
+    </nav>
+
+    <main class="container flex-grow">
+        <h1 class="text-4xl font-bold text-center my-8">HPTU Results</h1>
+        
+        <div class="table-responsive">
+            <table class="table table-dark table-striped">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Result Of</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% set unique_results = [] %}
+                    {% for result in data %}
+                        {% set result_tuple = (result.date, result.result_of, result.url) %}
+                        {% if result_tuple not in unique_results %}
+                            {% set _ = unique_results.append(result_tuple) %}
+                            <tr>
+                                <td>{{ result.date }}</td>
+                                <td>{{ result.result_of }}</td>
+                                <td><a href="{{ result.url }}" target="_blank">View Result</a></td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <footer class="bg-purple-900 text-center py-4 mt-8">
+        <p>&copy; 2023 HPTU Result Finder. All rights reserved.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
