@@ -18,8 +18,11 @@ class Home(Resource):
         semester = request.form.get('semester')
         scheme = request.form.get('scheme')
 
+        print(branch,semester,scheme)
+        filters = [branch,semester,scheme,'B.TECH']
+
         all_data = scrape_all_data()
-        filtered_data = filter_data(data=all_data,filters=[branch,semester,scheme])
+        filtered_data = filter_data(data=all_data,filters=filters)
         
         # Return form data as JSON for demonstration
         return make_response(render_template('result.html',data=filtered_data))
